@@ -21,28 +21,46 @@
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'compare-home' %}">Performance Comparison</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{% url 'compare-home' %}">Performance Comparison</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'compare-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'compare-about' %}">Code</a>
-              <a class="nav-item nav-link" href="{% url 'compare-datasets' %}">Datasets</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-              <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-              {% else %}
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              {% endif %}
-            </div>
-          </div>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'compare-home' %}">Home <span class="sr-only">Home</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Problem Specifications
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Add Problem</a>
+                <a class="dropdown-item" href="{% url 'compare-about' %}">Solve Problem</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Past Problems</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'compare-about' %}">Code</a>
+            </li>
+            
+       
+          </ul>
+          <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                  </div>
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
         </div>
       </nav>
     </header>
