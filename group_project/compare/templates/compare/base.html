@@ -57,6 +57,16 @@
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                     {% endif %}
                   </div>
+        <!--(when have DB, write the code here) After login, hide login and register, show the my account dropdown list -->
+            <div class="dropdown show">
+                    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'compare-myaccount' %}">My Account</a>
+                        <a class="dropdown-item" href="{% url 'compare-solutions' %}">Submitted Solutions</a>
+                        <a class="dropdown-item" href="{% url 'compare-problems' %}">Submitted Problems</a>
+                        <a class="dropdown-item" href="{% url 'compare-favourite' %}">Favourite Problems</a>
+                    </div>
+            </div>
           <!-- <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

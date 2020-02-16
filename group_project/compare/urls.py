@@ -6,4 +6,8 @@ urlpatterns = [
     path('about/', views.about, name='compare-about'),
     path('datasets/', views.datasets, name='compare-datasets'),
     path('information/', views.information, name='compare-information'),
+    path('myaccount/', views.myaccount, name='compare-myaccount'),
+    path('solutions/',views.solutions,name='compare-solutions'),
+    path('problems/',views.problems,name="compare-problems"),
+    path('favourite/',views.favourite,name='compare-favourite'),
 ]
