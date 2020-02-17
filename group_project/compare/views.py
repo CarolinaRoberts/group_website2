@@ -1,6 +1,7 @@
 import pymysql
 from django.shortcuts import render
 from .models import Post, Datasets
+from .forms import SubmitProbSpecForm
 
 
 def home(request):
@@ -9,9 +10,12 @@ def home(request):
     }
     return render(request, 'compare/home.html', context)
 
+def code(request):
+    return render(request, 'compare/code.html', {'title': 'Code'})
 
 def about(request):
-    return render(request, 'compare/about.html', {'title': 'Code'})
+	form = SubmitProbSpecForm()
+	return render(request, 'compare/about.html', {'form': form})
 
 
 def datasets(request):
