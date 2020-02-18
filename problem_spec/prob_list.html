@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+<style>
+	
+	.toggle-text {display: none;}
+</style>
+</head>
+<body>
+    
+    
+    
+	<!--NAVIGATION-->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		<ul class="navbar-nav">
+    		
+    		<li class="nav-item">
+     			 <a class="nav-link" href="prob_list.html">Problems</a>
+    		</li>
+
+    		<li class="nav-item">
+     			 <a href="upload.html" class="btn btn-success btn-md" role="button">Upload</a>
+    		</li>
+    		
+    		
+  		</ul>
+	</nav>
+	<!--end Navigation-->
+
+	<!--problem 1-->
+	 <div class="container-fluid p-3 my-3 border">
+  		<h3>Two Sum <span class="badge badge-success" style="float:right;">Easy</span></h3>    		
+			<div class="container-fluid p-3 bg-light text-black">
+				<p class="toggle-text">Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br> 
+					You may assume that each input would have exactly one solution, and you may not use the same element twice.<br>
+					<b> Example: </b> <br>
+					Given nums = [2, 7, 11, 15], target = 9, <br><br>
+					Because nums[0] + nums[1] = 2 + 7 = 9,
+					return [0, 1]. 				
+				</p> <a class="toggle-text-button">Read More</a>			
+			</div>		
+ 		<a href="twosum.html" class="btn btn-success btn-md" role="button">Solve</a>		
+	</div> 
+	<!--end problem 1-->
+
+
+	<!--problem 2-->
+	<div class="container-fluid p-3 my-3 border">
+  		<h3>Add Two Numbers <span class="badge badge-warning" style="float:right;">Medium</span></h3>
+  			<div class="container-fluid p-3 bg-light text-black">
+				<p class="toggle-text">You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.<br> 
+					You may assume the two numbers do not contain any leading zero, except the number 0 itself.<br>
+					<b> Example: </b> <br>
+					Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)<br><br>
+					Output: 7 -> 0 -> 8
+					Explanation: 342 + 465 = 807. 					
+				</p> <a class="toggle-text-button">Read More</a>
+			</div>	
+ 		<a href="addTwoNum.html" class="btn btn-success btn-md" role="button">Solve</a>	
+	</div> 
+	<!--end problem 2-->
+
+
+
+	<!--problem 3-->
+	<div class="container-fluid p-3 my-3 border">
+  		<h3>Median of Two Sorted Arrays <span class="badge badge-danger" style="float:right;">Hard</span></h3>
+  			<div class="container-fluid p-3 bg-light text-black">
+  				<p class="toggle-text"> There are two sorted arrays nums1 and nums2 of size m and n respectively.<br>
+					Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).<br>
+					You may assume nums1 and nums2 cannot be both empty.<br> 
+
+					<b> Example 1: </b> <br>
+					nums1 = [1, 3]<br>
+					nums2 = [2]<br><br>
+					The median is 2.0<br><br><br> 	
+
+					<b> Example 1: </b> <br>
+					nums1 = [1, 3]<br>
+					nums2 = [2]<br><br>
+					The median is 2.0 				
+  				</p> <a class="toggle-text-button">Read More</a>
+  			</div>
+ 		<a href="medianSorted.html" class="btn btn-success btn-md" role="button">Solve</a>	
+	</div> 
+	<!--end problem 3-->
+
+</body>
+
+
+
+<script>
+	// Add click event dynamically
+	$(document).on("click", ".toggle-text-button", function() {
+
+  	// Check if text is more or less
+  	if ($(this).text() == "Read More") {
+
+    	// Change link text
+    	$(this).text("Read Less");
+    
+    	// Travel up DOM tree to parent, then find any children with CLASS .toggle-text and slide down
+    	$(this).parent().children(".toggle-text").slideDown();
+    
+ 	 } 
+ 	 else {
+
+    	// Change link text
+    	$(this).text("Read More");
+    
+    	// Travel up DOM tree to parent, then find any children with CLASS .toggle-text and slide up 
+    	$(this).parent().children(".toggle-text").slideUp();    
+  	}
+  
+	});
+</script>
+</html>

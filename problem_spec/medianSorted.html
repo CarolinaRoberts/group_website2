@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script>
+  
+
+</head>
+
+<style type="text/css">
+	/*colum height to fit fullpage*/
+	.col1{height: 85vh; width: 40%;}
+
+	/*CSS for text editor*/
+	#editor {   
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin-right: 20px;
+		margin-left: 10px;
+	}
+	/*CSS for text editor ends*/
+</style>
+
+
+<body>
+
+	<!--NAVIGATION-->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		<ul class="navbar-nav">
+    		
+    		<li class="nav-item">
+     			 <a class="nav-link" href="prob_list.html">Problems</a>
+    		</li>
+
+    		<li class="nav-item">
+     			 <a href="upload.html" class="btn btn-success btn-md" role="button">Upload</a>
+    		</li>
+    		
+  		</ul>
+	</nav>
+	<!--end Navigation-->
+
+		<!--question description-->
+  		<div class="row">
+    		<div class="col1 p-3 mh-100 bg-light">
+    			<h2 style="margin-left: 20px;"> Median of two sorted arrays </h2>
+    			
+      			<p style="margin-left: 20px;">There are two sorted arrays nums1 and nums2 of size m and n respectively.<br>
+          Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).<br>
+          You may assume nums1 and nums2 cannot be both empty.<br> 
+
+          <b> Example 1: </b> <br>
+          nums1 = [1, 3]<br>
+          nums2 = [2]<br><br>
+          The median is 2.0<br><br><br>   
+
+          <b> Example 1: </b> <br>
+          nums1 = [1, 3]<br>
+          nums2 = [2]<br><br>
+          The median is 2.0         
+				</p>
+		<!--question description ends-->
+
+				<!--show / hide solution button-->
+				<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#solution" style="margin-left: 20px;">Solution</button>	
+				
+					<div id="solution" class="collapse" style="padding: 15px; background: lightblue;">
+<!--solution----------------->
+<pre>
+	
+	def median(A, B):
+    m, n = len(A), len(B)
+    if m > n:
+        A, B, m, n = B, A, n, m
+    if n == 0:
+        raise ValueError
+
+    imin, imax, half_len = 0, m, (m + n + 1) / 2
+    while imin <= imax:
+        i = (imin + imax) / 2
+        j = half_len - i
+        if i < m and B[j-1] > A[i]:
+            # i is too small, must increase it
+            imin = i + 1
+        elif i > 0 and A[i-1] > B[j]:
+            # i is too big, must decrease it
+            imax = i - 1
+        else:
+            # i is perfect
+
+            if i == 0: max_of_left = B[j-1]
+            elif j == 0: max_of_left = A[i-1]
+            else: max_of_left = max(A[i-1], B[j-1])
+
+            if (m + n) % 2 == 1:
+                return max_of_left
+
+            if i == m: min_of_right = B[j]
+            elif j == n: min_of_right = A[i]
+            else: min_of_right = min(A[i], B[j])
+
+            return (max_of_left + min_of_right) / 2.0
+</pre>
+
+  					</div>
+
+ <!--solution ends------------------->
+				
+    		</div>
+
+    		<!--text editor-->
+
+    		<div class="col p-3 ">
+      			<div class="container">
+	      			<div id="editor"></div>
+				</div>	
+
+    		</div>
+
+    	</div>    		
+  		<button type="button" class="btn-lg btn-info" style="float:right; margin-right: 100px; margin-top: 20px;"> Submit</button>
+	
+
+</body>
+
+
+<script>
+	/*text editor script*/
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/python");
+</script>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+</head>
+<body>
+
+	<!--NAVIGATION-->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		<ul class="navbar-nav">
+    		
+    		<li class="nav-item">
+     			 <a class="nav-link" href="prob_list.html">Problems</a>
+    		</li>
+
+    		<li class="nav-item">
+     			  <a href="upload.html" class="btn btn-success btn-md" role="button">Upload</a>
+    		</li>
+    		
+    		
+  		</ul>
+	</nav>
+	<!--end Navigation-->
+
+	
+<div class="container p-3 my-3 border">
+  <h2>Upload problem</h2>
+  
+  <form action="/action_page.php" class="needs-validation" novalidate>
+
+    	<div class="form-group">
+      		<label for="p_name">Problem name</label>
+     		<input type="text" class="form-control" id="p_name" placeholder="enter problem name" name="p_name" required>
+      		<div class="valid-feedback">Valid.</div>
+      		<div class="invalid-feedback">Please fill out this field.</div>
+    	</div>
+  	
+  		<div class="form-group">
+      		<label for="comment">Problem specification</label>
+      		<textarea class="form-control" rows="10" id="comment" name="text" required></textarea>
+      		<div class="valid-feedback">Valid.</div>
+      		<div class="invalid-feedback">Please fill out this field.</div>
+    	</div>
+
+    	<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    	<button type="reset" class="btn btn-primary btn-lg">Cancel</button>
+    </form>    
+</div>
+
+
+
+</body>
+
+<script>
+// Disable form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
+<script type="application/x-javascript">
+
+tinymce.init({selector:'#comment'});
+
+</script>
+
+</html>
