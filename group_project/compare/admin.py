@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Datasets
+from .models import Problem, Dataset
 
-admin.site.register(Post)
-admin.site.register(Datasets)
+admin.site.register(Problem)
+admin.site.register(Dataset)

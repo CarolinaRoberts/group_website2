@@ -1,12 +1,12 @@
 import pymysql
 from django.shortcuts import render
-from .models import Post, Datasets
+from .models import Problem, Dataset
 from .forms import SubmitProbSpecForm
 
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Problem.objects.all()
     }
     return render(request, 'compare/home.html', context)
 
@@ -20,7 +20,7 @@ def about(request):
 
 def datasets(request):
     context = {
-        'datasets': Datasets.objects.all()
+        'datasets': Dataset.objects.all()
     }
     return render(request, 'compare/datasets.html', context)
 
