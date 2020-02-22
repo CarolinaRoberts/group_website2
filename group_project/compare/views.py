@@ -2,6 +2,7 @@ import pymysql
 from django.shortcuts import render
 from .models import Problem, Dataset
 from .forms import SubmitProbSpecForm
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 
 def home(request):
@@ -9,6 +10,15 @@ def home(request):
         'posts': Problem.objects.all()
     }
     return render(request, 'compare/home.html', context)
+
+class ProblemsView(ListView):
+    template_name = 'compare/problems.html'
+    model = Problem
+    context_object_name = 'problemsList'
+
+class ProblemDetailView(DetailView):
+    model = Problem
+    template_name = 'compare/problem_detail.html'
 
 def code(request):
     return render(request, 'compare/code.html', {'title': 'Code'})
@@ -58,7 +68,7 @@ def problems(request):
     problem_list = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render(request, 'compare/problems.html', {'problem_list': problem_list})
+    return render(request, 'compare/myproblem.html', {'problem_list': problem_list})
 
 
 def favourite(request):
