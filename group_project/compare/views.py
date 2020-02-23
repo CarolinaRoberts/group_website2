@@ -1,5 +1,8 @@
 import pymysql
+from django.contrib.auth import logout
+from django.http import HttpResponse
 from django.shortcuts import render
+from utils import sqlhelper
 from .models import Problem, Dataset
 from .forms import SubmitProbSpecForm
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
@@ -23,6 +26,7 @@ class ProblemDetailView(DetailView):
 def code(request):
     return render(request, 'compare/code.html', {'title': 'Code'})
 
+
 def about(request):
 	form = SubmitProbSpecForm()
 	return render(request, 'compare/about.html', {'form': form})
@@ -40,10 +44,26 @@ def information(request):
 
 
 def myaccount(request):
-    # When having DB, get the userid for post all the information between webpage
-    # nid=request.GET.get('nid')
-    # current_account_info = sqlhelper.get_one("select id, Username from user where id=%s",[nid],)
-    return render(request, 'compare/myaccount.html')
+    nid = request.user.id
+    username = sqlhelper.get_one("select username from auth_user where id=%s", [nid])
+    email = sqlhelper.get_one("select email from auth_user where id=%s", [nid])
+    print(username)
+    if request.method == 'POST':
+        nid = request.POST.get('id')
+        opw = request.POST.get('Opwd')
+        npw = request.POST.get('Npwd')
+        cpw = request.POST.get('Cpwd')
+        if not request.user.check_password(opw):
+            error = "Original Password is Wrong"
+            return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
+        if npw != cpw:
+            error = "Inconsistent new password entry"
+            return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
+        request.user.set_password(npw)
+        request.user.save()
+        logout(request)
+        return render(request, 'compare/home.html')
+    return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email})
 
 
 def solutions(request):
@@ -55,7 +75,6 @@ def solutions(request):
     solution_list = cursor.fetchall()
     cursor.close()
     conn.close()
-
     return render(request, 'compare/solutions.html', {'solution_list': solution_list})
 
 
