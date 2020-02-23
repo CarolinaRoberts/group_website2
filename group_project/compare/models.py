@@ -13,6 +13,7 @@ class Problem(models.Model):
     evaluationCode = models.TextField(verbose_name='Evaluation Code')
     isValid = models.BooleanField(default=False, verbose_name= 'Valid?')
     isReleased = models.BooleanField(default=False, verbose_name= 'Released?')
+    localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)
 
     def __str__(self):
         return f"'{self.title}', '{self.problemInfo}', '{self.evaluationCode}', '{self.isValid}', '{self.isReleased}')"
@@ -36,6 +37,8 @@ class Solution(models.Model):
     solutionCode = models.TextField(verbose_name='Submitted Solution')
     isVerified = models.BooleanField(default=False)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)
+
 
     def __str__(self):
         return f"'{self.solutionCode}', '{self.isVerified}'"
