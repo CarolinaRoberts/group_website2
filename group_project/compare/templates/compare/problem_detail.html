@@ -9,5 +9,5 @@
 	<p>{{ object.problemInfo }}</p>
 	<p>{{ object.evaluationCode }}</p>
 </div>
-
+	<a href="{% url 'submit_solution' object.problemID %}">Submit Solution</a>
 {% endblock content %}
