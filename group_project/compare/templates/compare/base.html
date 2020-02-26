@@ -50,7 +50,7 @@
           </ul>
           <div class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <div class="dropdown show">
+                        <div class="dropdown show" style="padding-right: 5px">
                             <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="{% url 'compare-myaccount' %}">My Account</a>
@@ -59,8 +59,9 @@
                                 <a class="dropdown-item" href="{% url 'compare-favourite' %}">Favourite Problems</a>
                             </div>
                         </div>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        <div style="padding-right: 15px">
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        </div>
                     {% else %}
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>

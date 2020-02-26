@@ -7,14 +7,14 @@
     <table class="col-sm-12 table table-hover">
         <thead>
         <tr>
-            <th>My Submitted Solution Description</th>
+            <th>Title</th>
             <th width="15%">Detail</th>
         </tr>
         </thead>
         <tbody>
-        {% for row in solution_list %}
+        {% for row in a %}
         <tr>
-            <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row.solution }}</td>
+            <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row }}</td>
             <td><a href="#">Show</a></td>
         </tr>
         {% endfor %}

@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.shortcuts import render
 from utils import sqlhelper
-from .models import Problem, Dataset
+from .models import Problem, Dataset, Solution
 from .forms import SubmitProbSpecForm
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
@@ -67,26 +67,20 @@ def myaccount(request):
 
 
 def solutions(request):
-    # When having DB, get the userid for post all the information between webpage
-    # This sql statement need to be rewrite
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123123', db='mydb', charset='utf8')
-    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-    cursor.execute("select id, solution from solutions")
-    solution_list = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return render(request, 'compare/solutions.html', {'solution_list': solution_list})
+    nid = request.user.id
+    try:
+        a = Solution.objects.get(localUser=nid).problem.title
+    except Solution.DoesNotExist:
+        a = None
+    return render(request, 'compare/solutions.html', {'solution_list': a})
 
 
 def problems(request):
-    # When having DB, get the userid for post all the information between webpage
-    # This sql statement need to be rewrite
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123123', db='mydb', charset='utf8')
-    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-    cursor.execute("select id, solution from solutions")
-    problem_list = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    nid = request.user.id
+    try:
+        problem_list = Problem.objects.get(localUser=nid).title
+    except Problem.DoesNotExist:
+        problem_list = None
     return render(request, 'compare/myproblem.html', {'problem_list': problem_list})
 
 
