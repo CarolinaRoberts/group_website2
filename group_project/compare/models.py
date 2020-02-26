@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from .validators import validate_file
 from django.db.models.signals import pre_delete, post_delete
 from django.dispatch.dispatcher import receiver
+from django.forms.models import inlineformset_factory
+
 
 class Problem(models.Model):
     problemID = models.AutoField(primary_key=True)
@@ -34,7 +36,7 @@ class Dataset(models.Model):
 
 class Solution(models.Model):
     solutionID = models.AutoField(primary_key=True)
-    solutionCode = models.TextField(verbose_name='Submitted Solution')
+    solutionCode = models.TextField(verbose_name='Solution')
     isVerified = models.BooleanField(default=False)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)

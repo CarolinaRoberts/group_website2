@@ -6,7 +6,12 @@ from utils import sqlhelper
 from .models import Problem, Dataset, Solution
 from .forms import SubmitProbSpecForm
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
-
+from django.forms.models import inlineformset_factory
+from django.forms import Textarea, FileInput
+from .validators import validate_file
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import render, get_object_or_404
 
 def home(request):
     context = {
@@ -22,6 +27,53 @@ class ProblemsView(ListView):
 class ProblemDetailView(DetailView):
     model = Problem
     template_name = 'compare/problem_detail.html'
+
+
+childFormset = inlineformset_factory(Problem, Dataset, fields=('dataset', 'datasetDesc',), can_delete=False, extra=1, 
+    widgets={'datasetDesc': Textarea(attrs={'required': True}),'dataset': FileInput(attrs={'required': True, 'validators' : validate_file})})
+
+class CreateProblemView(LoginRequiredMixin, CreateView):
+    model = Problem
+    template_name = 'compare/new_problem.html'
+    fields = ['title', 'problemInfo', 'evaluationCode',]
+    login_url = 'login'
+
+    def get_context_data(self, **kwargs):
+        data = super(CreateProblemView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['datasets'] = childFormset(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            data['datasets'] = childFormset(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        datasets = context["datasets"]
+        form.instance.localUser = self.request.user
+        self.object = form.save()
+        if datasets.is_valid():
+            datasets.instance = self.object
+            datasets.save()
+        return super(CreateProblemView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('problem_detail', kwargs={'pk': self.object.pk})
+
+class SubmitSolutionView(LoginRequiredMixin, CreateView):
+    model = Solution
+    template_name = 'compare/submit_solution.html'
+    fields = ['solutionCode']
+    login_url = 'login'
+
+    def get_success_url(self):
+        problemID = self.kwargs['pk']
+        return reverse_lazy('problem_detail', kwargs={'pk': problemID})
+
+    def form_valid(self, form):
+        problem = get_object_or_404(Problem, pk=self.kwargs['pk'])
+        form.instance.problem = problem
+        form.instance.localUser = self.request.user
+        return super(SubmitSolutionView, self).form_valid(form)
 
 def code(request):
     return render(request, 'compare/code.html', {'title': 'Code'})
