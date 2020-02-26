@@ -12,9 +12,9 @@
         </tr>
         </thead>
         <tbody>
-        {% for row in a %}
+        {% for row in solution_list %}
         <tr>
-            <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row }}</td>
+            <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row.0 }}</td>
             <td><a href="#">Show</a></td>
         </tr>
         {% endfor %}

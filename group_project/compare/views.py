@@ -1,7 +1,7 @@
 import pymysql
 from django.contrib.auth import logout
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from utils import sqlhelper
 from .models import Problem, Dataset, Solution
 from .forms import SubmitProbSpecForm
@@ -96,44 +96,53 @@ def information(request):
 
 
 def myaccount(request):
-    nid = request.user.id
-    username = sqlhelper.get_one("select username from auth_user where id=%s", [nid])
-    email = sqlhelper.get_one("select email from auth_user where id=%s", [nid])
-    print(username)
-    if request.method == 'POST':
-        nid = request.POST.get('id')
-        opw = request.POST.get('Opwd')
-        npw = request.POST.get('Npwd')
-        cpw = request.POST.get('Cpwd')
-        if not request.user.check_password(opw):
-            error = "Original Password is Wrong"
-            return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
-        if npw != cpw:
-            error = "Inconsistent new password entry"
-            return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
-        request.user.set_password(npw)
-        request.user.save()
-        logout(request)
-        return render(request, 'compare/home.html')
-    return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email})
+    if request.user.is_authenticated:
+        nid = request.user.id
+        username = sqlhelper.get_one("select username from auth_user where id=%s", [nid])
+        email = sqlhelper.get_one("select email from auth_user where id=%s", [nid])
+        print(username)
+        if request.method == 'POST':
+            nid = request.POST.get('id')
+            opw = request.POST.get('Opwd')
+            npw = request.POST.get('Npwd')
+            cpw = request.POST.get('Cpwd')
+            if not request.user.check_password(opw):
+                error = "Original Password is Wrong"
+                return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
+            if npw != cpw:
+                error = "Inconsistent new password entry"
+                return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email, 'error': error})
+            request.user.set_password(npw)
+            request.user.save()
+            logout(request)
+            return render(request, 'compare/home.html')
+        return render(request, 'compare/myaccount.html', {'id': nid, 'username': username, 'email': email})
+    else:
+        return redirect('login')
 
 
 def solutions(request):
-    nid = request.user.id
-    try:
-        a = Solution.objects.get(localUser=nid).problem.title
-    except Solution.DoesNotExist:
-        a = None
-    return render(request, 'compare/solutions.html', {'solution_list': a})
+    if request.user.is_authenticated:
+        nid = request.user.id
+        try:
+            solution_list = Solution.objects.filter(localUser=nid).all().values_list("problem__title")
+        except Solution.DoesNotExist:
+            solution_list = None
+        return render(request, 'compare/solutions.html', {'solution_list': solution_list})
+    else:
+        return redirect('login')
 
 
 def problems(request):
-    nid = request.user.id
-    try:
-        problem_list = Problem.objects.get(localUser=nid).title
-    except Problem.DoesNotExist:
-        problem_list = None
-    return render(request, 'compare/myproblem.html', {'problem_list': problem_list})
+    if request.user.is_authenticated:
+        nid = request.user.id
+        try:
+            problem_list = Problem.objects.filter(localUser=nid)
+        except Problem.DoesNotExist:
+            problem_list = None
+        return render(request, 'compare/myproblem.html', {'problem_list': problem_list})
+    else:
+        return redirect('login')
 
 
 def favourite(request):
