@@ -1,24 +1,31 @@
-{% extends "compare/base.html" %}
+{% extends 'compare/base.html' %}
+
 {% block content %}
-    <div style="margin: 10px 0;border-bottom:1px solid #aaa;">
-    <h1>My Submitted Problems</h1>
-    </div>
-    <div>
-    <table class="col-sm-12 table table-hover">
-        <thead>
-        <tr>
-            <th>My Submitted Problem Description</th>
-            <th width="15%">Detail</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in problem_list %}
-        <tr>
-            <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row.solution }}</td>
-            <td><a href="#">Show</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
+
+<h1>PROBLEMS</h1>
+
+<div class="problems-display">
+
+<table class="problems-table">
+	<tr style="font-size: 20px; border-bottom: 1px solid #a3a3c2">
+		<th>#</th>
+		<th>Title</th>
+		<th>End Date</th>
+		<th>Status</th>
+		<th>Solutions</th>
+	</tr>
+	{% for problem in problemsList %}
+	<tr class="problem-list">
+		<td style="text-align: center;">{{ forloop.counter }}</td>
+		<td width="70%" style="padding-left: 20px;"><a href="{% url 'problem_detail' problem.problemID %}">{{ problem.title }}</a></td>
+		<td align="center" width="10%">10/11/2022</td>
+		<td align="center" width="10%">Closed</td>
+		<td align="center"><a href="#">0</a></td>
+	</tr>
+	{% endfor %}
+
+</table>	
+
+</div>
+
 {% endblock content %}

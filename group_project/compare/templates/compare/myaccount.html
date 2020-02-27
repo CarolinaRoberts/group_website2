@@ -10,7 +10,7 @@
             <div class="col-sm-10">
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-light">
-                         write code here to get the username (create a DB and select from DB)
+                        {{ username.0 }}
                     </li>
                 </ul>
             </div>
@@ -20,7 +20,7 @@
             <div class="col-sm-10">
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-light">
-                        write code here to get the e-mail (select from DB)
+                        {{ email.0 }}
                     </li>
                 </ul>
             </div>
@@ -28,10 +28,16 @@
     </form>
     <div style="border-bottom:1px solid #aaa;margin: 10px 0;">
         <h4>Change Password?</h4>
+        {% if error != NULL %}
+            <div class="alert alert-danger">
+                <strong>{{ error }}</strong>
+            </div>
+        {% endif %}
     </div>
     <div>
-        <form class="text-muted content-section">
+        <form class="text-muted content-section" method="POST" action="/myaccount/">
             <div class="form-group row">
+                <input style="display: none" name="id" value="{{ id }}">
                 <label style="margin: 10px 0;" for="OriginalPassword" class="col-sm-4 col-form-label col-form-label-lg">Original Password</label>
                 <div class="input-group-lg">
                     <input style="margin: 10px 0;width: 465px " class=" list-group-item" type="password" name="Opwd">
