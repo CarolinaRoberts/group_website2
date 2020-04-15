@@ -110,3 +110,8 @@ a.article-title:hover {
 .foot{
   color:  #0000FF;
 }
+
+
+hr.solid {
+  border-top: 3px solid #bbb;
+}

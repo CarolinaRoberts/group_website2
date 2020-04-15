@@ -62,9 +62,18 @@
                         <div style="padding-right: 15px">
                         <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         </div>
+
+                            {% if user.is_superuser %}
+                              <div style="padding-right: 15px">
+                              <a class="nav-item nav-link" href="{% url 'hostpage' %}">Host</a>
+                        </div>
+                            {% endif %}
+
                     {% else %}
+
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+
                     {% endif %}
                   </div>
 

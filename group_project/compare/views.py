@@ -155,3 +155,24 @@ def favourite(request):
     cursor.close()
     conn.close()
     return render(request, 'compare/favourite.html', {'favourite_list': favourite_list})
+
+
+def hostpage(request):
+    if request.user.is_superuser:
+        return render(request, 'compare/hostpage.html', {'title': 'Host'})
+    else:
+        return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
+
+def acceptDecline(request):
+    if request.user.is_superuser:
+        return render(request, 'compare/acceptDecline.html', {'title': 'Accept/Decline Problem Specification'})
+    else:
+        return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
+
+def hostProblems(request):
+    if request.user.is_superuser:
+        return render(request, 'compare/hostProblems.html', {'title': 'My Hosted Problems'})
+    else:
+        return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})

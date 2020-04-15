@@ -16,5 +16,7 @@ urlpatterns = [
     path('problems/new/', CreateProblemView.as_view(), name='new_problem'),
     path('problems/<int:pk>/', ProblemDetailView.as_view(), name='problem_detail'),
     path('problems/<int:pk>/submit_solution/', SubmitSolutionView.as_view(), name='submit_solution'),
-
+    path('hostpage/', views.hostpage, name='hostpage'),
+    path('acceptDecline/', views.acceptDecline, name='acceptDecline'),
+    path('hostProblems/', views.hostProblems, name='hostProblems'),
 ]
