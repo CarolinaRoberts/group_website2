@@ -1,17 +1,15 @@
 {% extends "compare/base.html" %}
 {% block content %}
-    {% for problem in problemsList %}
-      {% if problem.isValid and problem.isReleased %}
+    {% for post in posts %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              posted by: <a class="mr-2" href="#">{{ problem.localUser.username }}</a>
+              <a class="mr-2" href="#">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted }}</small>
             </div>
-            <h2><a href="{% url 'problem_detail' problem.problemID %}">{{ problem.title }}</a></h2>
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
-      {% endif %}
     {% endfor %}
 {% endblock content %}
