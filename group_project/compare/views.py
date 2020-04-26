@@ -15,7 +15,7 @@ from django.shortcuts import render, get_object_or_404
 
 def home(request):
     context = {
-        'posts': Problem.objects.all()
+        'posts': Problem.objects.filter(status='Accept')
     }
     return render(request, 'compare/home.html', context)
 
@@ -37,6 +37,7 @@ class CreateProblemView(LoginRequiredMixin, CreateView):
     template_name = 'compare/new_problem.html'
     fields = ['title', 'problemInfo', 'evaluationCode',]
     login_url = 'login'
+
 
     def get_context_data(self, **kwargs):
         data = super(CreateProblemView, self).get_context_data(**kwargs)
@@ -166,13 +167,60 @@ def hostpage(request):
 
 def acceptDecline(request):
     if request.user.is_superuser:
-        return render(request, 'compare/acceptDecline.html', {'title': 'Accept/Decline Problem Specification'})
+        context = {
+        'posts': Problem.objects.all()
+        }
+        if request.method == 'POST':
+            post = Problem.objects.get(problemID=request.POST.get('id'))
+
+            if request.POST.get('status'):
+                post.status = request.POST.get('status')
+                post.save()
+        return render(request, 'compare/acceptDecline.html', context, {'title': 'Accept/Reject Problem Specification'})
+   
     else:
         return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
+def accepted(request):
+    if request.user.is_superuser:
+        context = {
+        'posts': Problem.objects.filter(status='Accept')
+        }
+        return render(request, 'compare/accepted.html', context, {'title': 'Accepted Problems'})
+    else:
+        return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
+
+def rejected(request):
+    if request.user.is_superuser:
+        context = {
+        'posts': Problem.objects.filter(status='Reject')
+        }
+        return render(request, 'compare/rejected.html', context, {'title': 'Rejected Problems'})
+    else:
+        return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
 
 
 def hostProblems(request):
     if request.user.is_superuser:
-        return render(request, 'compare/hostProblems.html', {'title': 'My Hosted Problems'})
+        context = {
+        'posts': Problem.objects.filter(status='Accept')
+        }
+        return render(request, 'compare/hostProblems.html', context, {'title': 'My Hosted Problems'})
     else:
         return render(request, 'compare/mustbehost.html', {'title': 'Must Be Host'})
+
+
+
+def userProblemStatus(request):
+    if request.user.is_authenticated:
+        nid = request.user.id
+        try:
+            problem_list = Problem.objects.filter(localUser=nid)
+        except Problem.DoesNotExist:
+            problem_list = None
+        return render(request, 'compare/userProblemStatus.html', {'problem_list': problem_list})
+    else:
+        return redirect('login')
+

@@ -15,7 +15,7 @@
         {% for row in problem_list %}
         <tr>
             <td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;width: 630px;display: inline-block">{{ row.title }}</td>
-            <td><a href="#">Show</a></td>
+            <td><a href="{% url 'userProblemStatus' %}">Show</a></td>
         </tr>
         {% endfor %}
         </tbody>

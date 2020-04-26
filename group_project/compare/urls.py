@@ -19,4 +19,8 @@ urlpatterns = [
     path('hostpage/', views.hostpage, name='hostpage'),
     path('acceptDecline/', views.acceptDecline, name='acceptDecline'),
     path('hostProblems/', views.hostProblems, name='hostProblems'),
+    path('accepted/', views.accepted, name='accepted'),
+    path('rejected/', views.rejected, name='rejected'),
+    path('userProblemStatus/', views.userProblemStatus, name='userProblemStatus'),
+
 ]

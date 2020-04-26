@@ -16,6 +16,7 @@ class Problem(models.Model):
     isValid = models.BooleanField(default=False, verbose_name= 'Valid?')
     isReleased = models.BooleanField(default=False, verbose_name= 'Released?')
     localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)
+    status = models.CharField(max_length=30)
 
     def __str__(self):
         return f"'{self.title}', '{self.problemInfo}', '{self.evaluationCode}', '{self.isValid}', '{self.isReleased}')"
@@ -50,6 +51,8 @@ def file_delete_handler(sender, **kwargs):
     file = kwargs['instance']
     storage, path = file.dataset.storage, file.dataset.path
     storage.delete(path)
+
+
 
 # class Post(models.Model):
 #     title = models.CharField(max_length=100)

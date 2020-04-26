@@ -1,33 +1,35 @@
 {% extends "compare/base.html" %}
 {% block content %}
 
-        <h3> Accept/Decline Submitted Problem Specifications:</h3>
+        <h3> Accept/Reject Submitted Problem Specifications:</h3>
+        <br>
+        <h6> For <b>accepted</b> problem specifications <a href="{% url 'accepted' %}">click here</a></h6>
+        <h6> For <b>rejected</b> problem specifications <a href="{% url 'rejected' %}">click here</a></h6>
         <br>
         <h4>Pending Problem Specifications:</h4>
         <p class="text-muted"> Note: When declining problem specifications, they will appear in the 'archived' section.</p>
-        <br><br><br>
+        <br>
 
-    {% for data in datasets %}
+    {% for post in posts %}
+    <form method="POST">
+
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ data.author }}</a>
-              <small class="text-muted">{{ data.date_posted }}</small>
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted }}</small>
             </div>
-            <h2><a class="article-title" href="compare/information.html">{{ data.title }}</a></h2>
-            <p class="article-content">{{ data.content }}</p>
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
-        <!-- Will add buttons (Accept/Decline) -->
+
+        <input type="submit" class="btn btn-info" value="Accept" name="status">
+        <input type="submit" class="btn btn-info" value="Reject" name="status">   
+        <input type="hidden" name="id" value={{ post.problemID }}></input>
+    <br>
+    <hr class="solid">
+    </form>
     {% endfor %}
-
-      <hr class="solid">
-      <h4> Archived Problem Specifications:  (can also change this to a button) </h4>
-      <br>
-      {% for data in datasets %}
-
-      <!-- This will contain archived problem specifications if the host chooses to decline one of them, user will get a notification if their problem specification is declined -->
-
-      {% endfor %}
 
 {% endblock content %}
