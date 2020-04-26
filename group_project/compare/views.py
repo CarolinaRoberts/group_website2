@@ -81,8 +81,8 @@ def code(request):
 
 
 def about(request):
-	form = SubmitProbSpecForm()
-	return render(request, 'compare/about.html', {'form': form})
+    form = SubmitProbSpecForm()
+    return render(request, 'compare/about.html', {'form': form})
 
 
 def datasets(request):
@@ -223,4 +223,3 @@ def userProblemStatus(request):
         return render(request, 'compare/userProblemStatus.html', {'problem_list': problem_list})
     else:
         return redirect('login')
-
