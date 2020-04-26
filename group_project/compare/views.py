@@ -15,7 +15,7 @@ from django.shortcuts import render, get_object_or_404
 
 def home(request):
     context = {
-        'posts': Problem.objects.all()
+        'problemsList': Problem.objects.all(),
     }
     return render(request, 'compare/home.html', context)
 
