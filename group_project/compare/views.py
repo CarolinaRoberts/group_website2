@@ -24,9 +24,32 @@ class ProblemsView(ListView):
     model = Problem
     context_object_name = 'problemsList'
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['problemsList'] = Problem.objects.all()
+    #     context['solutionList'] = Solution.objects.all()
+
+    #     return context
+
+    # def get_queryset(self):
+    #     return Problem.objects.order_by('problemID')
+
 class ProblemDetailView(DetailView):
     model = Problem
     template_name = 'compare/problem_detail.html'
+
+class SolutionDetailView(DetailView):
+    model = Solution
+    template_name = 'compare/solution.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(SolutionDetailView, self).get_context_data(**kwargs)
+    #     solution = Solution.objects.get(id=self.kwargs.get('pk1', ''))
+    #     context['solution'] = solution
+    #     return context
+
+    # def get_success_url(self):
+    #     return reverse('solution', kwargs={'pk1': self.object.pk})
 
 
 childFormset = inlineformset_factory(Problem, Dataset, fields=('dataset', 'datasetDesc',), can_delete=False, extra=1, 
@@ -75,6 +98,32 @@ class SubmitSolutionView(LoginRequiredMixin, CreateView):
         form.instance.problem = problem
         form.instance.localUser = self.request.user
         return super(SubmitSolutionView, self).form_valid(form)
+
+class SolutionView(LoginRequiredMixin, ListView):
+    template_name = 'compare/solution_list.html'
+    context_object_name = 'solutionList'
+    # queryset = 
+
+    def get_queryset(self):
+        problemID = self.kwargs['pk']
+        # self.problemID = get_object_or_404(Problem, )
+        return Solution.objects.filter(problem_id = problemID)
+
+    # def get_success_url(self):
+    #     problemID = self.kwargs['pk']
+    #     return reverse('solution_list', kwargs={'pk': problemID})
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
+class CompareSolutionsView(LoginRequiredMixin, ListView):
+    template_name = 'compare/compare_solutions.html'
+    context_object_name = 'solutionList'
+    # queryset = 
+
+    def get_queryset(self):
+        problemID = self.kwargs['pk']
+        # self.problemID = get_object_or_404(Problem, )
+        return Solution.objects.filter(problem_id = problemID)
 
 def code(request):
     return render(request, 'compare/code.html', {'title': 'Code'})

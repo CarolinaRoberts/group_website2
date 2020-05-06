@@ -16,7 +16,8 @@ class Problem(models.Model):
     isValid = models.BooleanField(default=False, verbose_name= 'Valid?')
     isReleased = models.BooleanField(default=False, verbose_name= 'Released?')
     localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)
-    status = models.CharField(max_length=30)
+    status = models.CharField(max_length=30, default="Pending")
+    dateSubmitted = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"'{self.title}', '{self.problemInfo}', '{self.evaluationCode}', '{self.isValid}', '{self.isReleased}')"
@@ -41,6 +42,7 @@ class Solution(models.Model):
     isVerified = models.BooleanField(default=False)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     localUser = models.ForeignKey(User, on_delete=models.CASCADE, default="", editable=False)
+    dateSubmitted = models.DateField(auto_now_add=True)
 
 
     def __str__(self):

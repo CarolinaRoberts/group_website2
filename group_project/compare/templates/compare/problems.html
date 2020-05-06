@@ -10,7 +10,7 @@
 	<tr style="font-size: 20px; border-bottom: 1px solid #a3a3c2">
 		<th>#</th>
 		<th>Title</th>
-		<th>End Date</th>
+		<th>Date Posted</th>
 		<th>Status</th>
 		<th>Solutions</th>
 	</tr>
@@ -18,9 +18,16 @@
 	<tr class="problem-list">
 		<td style="text-align: center;">{{ forloop.counter }}</td>
 		<td width="70%" style="padding-left: 20px;"><a href="{% url 'problem_detail' problem.problemID %}">{{ problem.title }}</a></td>
-		<td align="center" width="10%">10/11/2022</td>
-		<td align="center" width="10%">Closed</td>
-		<td align="center"><a href="#">0</a></td>
+		<td align="center" width="10%">{{ problem.dateSubmitted|date:"d/m/Y" }}</td>
+		<td align="center" width="10%">{{ problem.status }}</td>
+		<td align="center">{% if problem.solution_set.count > 0 %} <a href="{% url 'solution_list' problem.problemID %}"> 
+			{{ problem.solution_set.count }}
+		</a>
+		{% else %}
+		{{ problem.solution_set.count }}
+		{% endif %}
+
+	</td>
 	</tr>
 	{% endfor %}
 

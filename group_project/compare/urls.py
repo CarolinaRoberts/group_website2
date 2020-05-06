@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import ProblemsView, ProblemDetailView, CreateProblemView, ProblemDetailView, SubmitSolutionView
+from .views import ProblemsView, ProblemDetailView, CreateProblemView, ProblemDetailView, SubmitSolutionView, SolutionView, CompareSolutionsView
+# SolutionDetailView
 
 urlpatterns = [
     path('', views.home, name='compare-home'),
@@ -22,5 +23,8 @@ urlpatterns = [
     path('accepted/', views.accepted, name='accepted'),
     path('rejected/', views.rejected, name='rejected'),
     path('userProblemStatus/', views.userProblemStatus, name='userProblemStatus'),
+    path('problems/<int:pk>/solution_list/', SolutionView.as_view(), name='solution_list'),
+    path('problems/<int:pk>/compare_solutions/', CompareSolutionsView.as_view(), name='compare_solutions'),
+    # path('problems/<int:pk>/solution_list/<int:pk1>/', SolutionDetailView.as_view(), name='solution'),
 
 ]
